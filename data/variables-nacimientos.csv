@@ -1715,20 +1715,20 @@ Escolaridad del padre,1,Ninguno
 ,9,Ignorado
 Ocupación (Subgrupos CIUO-08) del padre,01,Oficiales de las fuerzas armadas
 ,03,Otros miembros de las fuerzas armadas
-,11,Directores ejecutivos, personal directivo de la administración pública y miembros del poder ejecutivo y de los cuerpos legislativos
+,11,"Directores ejecutivos, personal directivo de la administración pública y miembros del poder ejecutivo y de los cuerpos legislativos"
 ,12,Directores administradores y comerciales
 ,13,Directores y gerentes de producción y operaciones
-,14,Gerentes de hoteles, restaurantes, comercios y otros servicios
+,14,"Gerentes de hoteles, restaurantes, comercios y otros servicios"
 ,21,Profesionales de las ciencias y de la ingeniería
 ,22,Profesionales de la salud
 ,23,Profesionales de la enseñanza
 ,24,Especialistas en organización de la administración publica y de empresas
 ,25,Profesionales de tecnología de la información y las comunicaciones
-,26,Profesionales en derecho, en ciencias sociales y culturales
+,26,"Profesionales en derecho, en ciencias sociales y culturales"
 ,31,Profesionales de las ciencias y la ingeniería de nivel medio
 ,32,Profesionales de nivel medio de la salud
 ,33,Profesionales de nivel medio en operaciones financieras y administrativas
-,34,Profesionales de nivel medio de servicios jurídicos, sociales, culturales y afines
+,34,"Profesionales de nivel medio de servicios jurídicos, sociales, culturales y afines"
 ,35,Técnicos de la tecnología de la información y las comunicaciones
 ,41,Oficinistas
 ,42,Empleados en trato directo con el público
@@ -1739,18 +1739,18 @@ Ocupación (Subgrupos CIUO-08) del padre,01,Oficiales de las fuerzas armadas
 ,53,Trabajadores de los cuidados personales
 ,54,Personal de los servicios de protección
 ,61,Agricultores y trabajadores calificados de explotaciones agropecuarias con destino al mercado
-,62,Trabajadores forestales calificados, pescadores y cazadores
+,62,"Trabajadores forestales calificados, pescadores y cazadores"
 ,71,Oficiales y operarios de la construcción excluyendo electricistas
-,72,Oficiales y operarios de la metalurgia, la construcción mecánica y afines
+,72,"Oficiales y operarios de la metalurgia, la construcción mecánica y afines"
 ,73,Artesanos y operarios de las artes gráficas
 ,74,Trabajadores especializados en electricidad y la elecrotecnología
-,75,Operarios y oficiales de procesamiento de alimentos, de la confección, ebanistas, otros artesanos y afines
+,75,"Operarios y oficiales de procesamiento de alimentos, de la confección, ebanistas, otros artesanos y afines"
 ,81,Operadores de instalaciones fijas y máquinas
 ,82,Ensambladores
 ,83,Conductores de vehículos y operadores de equipos pesados móviles
 ,91,Limpiadores y asistentes
-,92,Peones agropecuarios, pesqueros y forestales
-,93,Peones de la minería, la construcción, la industria manufacturera y el transporte
+,92,"Peones agropecuarios, pesqueros y forestales"
+,93,"Peones de la minería, la construcción, la industria manufacturera y el transporte"
 ,94,Ayudantes de preparación de alimentos
 ,95,Vendedores ambulantes de servicios y afines
 ,96,Recolectores de desechos y otras ocupaciones elementales
@@ -2623,20 +2623,20 @@ Escolaridad de la madre,1,Ninguno
 ,9,Ignorado
 Ocupación (Subgrupos CIUO-08) de la madre,01,Oficiales de las fuerzas armadas
 ,03,Otros miembros de las fuerzas armadas
-,11,Directores ejecutivos, personal directivo de la administración pública y miembros del poder ejecutivo y de los cuerpos legislativos
+,11,"Directores ejecutivos, personal directivo de la administración pública y miembros del poder ejecutivo y de los cuerpos legislativos"
 ,12,Directores administradores y comerciales
 ,13,Directores y gerentes de producción y operaciones
-,14,Gerentes de hoteles, restaurantes, comercios y otros servicios
+,14,"Gerentes de hoteles, restaurantes, comercios y otros servicios"
 ,21,Profesionales de las ciencias y de la ingeniería
 ,22,Profesionales de la salud
 ,23,Profesionales de la enseñanza
 ,24,Especialistas en organización de la administración publica y de empresas
 ,25,Profesionales de tecnología de la información y las comunicaciones
-,26,Profesionales en derecho, en ciencias sociales y culturales
+,26,"Profesionales en derecho, en ciencias sociales y culturales"
 ,31,Profesionales de las ciencias y la ingeniería de nivel medio
 ,32,Profesionales de nivel medio de la salud
 ,33,Profesionales de nivel medio en operaciones financieras y administrativas
-,34,Profesionales de nivel medio de servicios jurídicos, sociales, culturales y afines
+,34,"Profesionales de nivel medio de servicios jurídicos, sociales, culturales y afines"
 ,35,Técnicos de la tecnología de la información y las comunicaciones
 ,41,Oficinistas
 ,42,Empleados en trato directo con el público
@@ -2647,17 +2647,17 @@ Ocupación (Subgrupos CIUO-08) de la madre,01,Oficiales de las fuerzas armadas
 ,53,Trabajadores de los cuidados personales
 ,54,Personal de los servicios de protección
 ,61,Agricultores y trabajadores calificados de explotaciones agropecuarias con destino al mercado
-,62,Trabajadores forestales calificados, pescadores y cazadores
+,62,"Trabajadores forestales calificados, pescadores y cazadores"
 ,71,Oficiales y operarios de la construcción excluyendo electricistas
-,72,Oficiales y operarios de la metalurgia, la construcción mecánica y afines
+,72,"Oficiales y operarios de la metalurgia, la construcción mecánica y afines"
 ,73,Artesanos y operarios de las artes gráficas
 ,74,Trabajadores especializados en electricidad y la elecrotecnología
-,75,Operarios y oficiales de procesamiento de alimentos, de la confección, ebanistas, otros artesanos y afines
+,75,"Operarios y oficiales de procesamiento de alimentos, de la confección, ebanistas, otros artesanos y afines"
 ,81,Operadores de instalaciones fijas y máquinas
 ,83,Conductores de vehículos y operadores de equipos pesados móviles
 ,91,Limpiadores y asistentes
-,92,Peones agropecuarios, pesqueros y forestales
-,93,Peones de la minería, la construcción, la industria manufacturera y el transporte
+,92,"Peones agropecuarios, pesqueros y forestales"
+,93,"Peones de la minería, la construcción, la industria manufacturera y el transporte"
 ,94,Ayudantes de preparación de alimentos
 ,95,Vendedores ambulantes de servicios y afines
 ,96,Recolectores de desechos y otras ocupaciones elementales
