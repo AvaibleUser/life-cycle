@@ -125,3 +125,27 @@ ggplot(evolution, aes(x = month, y = n, fill = type)) +
     x = "Mes", y = "Cantidad", fill = "Tipo"
   ) +
   dark_theme
+
+# --------------------------
+# GRÁFICA 2:
+# Relación entre edad materna y peso neonatal (Densidad 2D)
+# --------------------------
+
+to_kg <- function(lbs, ozs) {
+  as.numeric(lbs) * 0.453592 + as.numeric(ozs) * 0.0283495
+}
+
+births_kg <- birth$data %>%
+  mutate(weight = to_kg(`Libras`, `Onzas`)) %>%
+  mutate(mothers_age = as.numeric(`Edadm`)) %>%
+  filter(`Libras` != "99", `Onzas` != "99", `Edadm` != 999) %>%
+  select(weight, mothers_age)
+
+ggplot(births_kg, aes(x = mothers_age, y = weight)) +
+  geom_hex(bins = 30) +
+  scale_fill_viridis(option = "C", alpha = 0.8) +
+  labs(
+    title = "Densidad de Edad Materna vs Peso al Nacer",
+    x = "Edad de la Madre", y = "Peso (kg)", fill = "Nacimientos"
+  ) +
+  dark_theme
