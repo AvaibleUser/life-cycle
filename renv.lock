@@ -992,6 +992,41 @@
       "Repository/R-Forge/DateTimeStamp": "2022-01-05 19:40:37",
       "NeedsCompilation": "no"
     },
+    "catppuccin": {
+      "Package": "catppuccin",
+      "Version": "0.1.0",
+      "Source": "GitHub",
+      "Type": "Package",
+      "Title": "Color Palettes based on catppuccin",
+      "Authors@R": "person(\"Kejun\", \"Ying\", email = \"albert.k.ying@gmail.com\", role = c(\"aut\", \"cre\"))",
+      "Description": "Catppuccin is a community-driven pastel theme that aims to be the middle ground between low and high contrast themes. It consists of 4 soothing warm palettes with 26 eye-candy colors",
+      "License": "MIT + file LICENSE",
+      "Encoding": "UTF-8",
+      "Imports": [
+        "ggplot2",
+        "viridis",
+        "grDevices",
+        "graphics"
+      ],
+      "Suggests": [
+        "devtools",
+        "scales",
+        "knitr",
+        "rmarkdown",
+        "dichromat"
+      ],
+      "VignetteBuilder": "knitr",
+      "RoxygenNote": "7.1.2.9000",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "catppuccin",
+      "RemoteUsername": "albert-ying",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "10508ab758e0554d1cf074937e0f2f8922eeb5f4",
+      "NeedsCompilation": "no",
+      "Author": "Kejun Ying [aut, cre]",
+      "Maintainer": "Kejun Ying <albert.k.ying@gmail.com>"
+    },
     "cellranger": {
       "Package": "cellranger",
       "Version": "1.1.0",
