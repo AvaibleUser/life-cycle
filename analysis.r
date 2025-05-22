@@ -11,6 +11,7 @@ library(treemap)
 library(viridis)
 library(survival)
 library(survminer)
+library(ggwordcloud)
 library(catppuccin)
 
 dark_theme <- theme_minimal() +
@@ -20,6 +21,7 @@ dark_theme <- theme_minimal() +
     plot.title = element_text(color = "#cdd6f4", face = "bold"),
     axis.text = element_text(color = "#a6adc8"),
     axis.title = element_text(color = "#cdd6f4", face = "bold"),
+    strip.text = element_text(color = "#cdd6f4"),
     legend.text = element_text(color = "#cdd6f4"),
     legend.title = element_text(color = "#cdd6f4", face = "bold"),
     legend.background = element_rect(fill = "#1e1e2e"),
@@ -199,3 +201,28 @@ treemap(causes,
   vSize = "n",
   title = "Principales Causas de Muerte por Grupo de Edad"
 )
+
+# --------------------------
+# GRÁFICA 5:
+# Distribución de ocupaciones parentales (Redes)
+# --------------------------
+
+ocupation <- birth$data %>%
+  select(father_ocupation = `Ocupap`, mother_ocupation = `Ocupam`) %>%
+  inner_join(birth$vars$`Ocupap`, by = c("father_ocupation" = "code")) %>%
+  select(father_ocupation = label, mother_ocupation) %>%
+  inner_join(birth$vars$`Ocupam`, by = c("mother_ocupation" = "code")) %>%
+  select(father_ocupation, mother_ocupation = label) %>%
+  gather(parents, ocupation) %>%
+  count(parents, ocupation) %>%
+  top_n(20, n)
+
+ggplot(ocupation, aes(label = ocupation, size = n, color = parents)) +
+  geom_text_wordcloud_area(shape = "square", eccentricity = 0.35) +
+  scale_size_area(max_size = 50, trans = power_trans(0.55)) +
+  facet_wrap(~parents, ncol = 1, labeller = as_labeller(c(
+    `father_ocupation` = "Ocupación del Padre",
+    `mother_ocupation` = "Ocupación de la Madre"
+  ))) +
+  labs(title = "Ocupaciones más Comunes de Padres vs Madres") +
+  dark_theme
