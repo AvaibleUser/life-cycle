@@ -28,6 +28,10 @@ dark_theme <- theme_minimal() +
     panel.grid = element_line(color = "#7f849c"),
   )
 
+month_names <- c(
+  "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+  "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+)
 # --------------------------
 # Funciones auxiliares
 # --------------------------
@@ -122,6 +126,7 @@ evolution <- bind_rows(
 ggplot(evolution, aes(x = month, y = n, fill = type)) +
   geom_area(position = "identity") +
   facet_wrap(~year, ncol = 1) +
+  scale_x_continuous(breaks = seq(1, 12), labels = month_names) +
   scale_fill_catppuccin(palette = "mocha", alpha = 0.8) +
   labs(
     title = "Evolución Mensual Comparada de Nacimientos y Defunciones",
@@ -250,5 +255,29 @@ ggplot(education_vs_cause, aes(x = education, y = cause)) +
     x = "Escolaridad",
     y = "Causa de Muerte",
     fill = "Count"
+  ) +
+  dark_theme
+
+# --------------------------
+# GRÁFICA 7:
+# Patrones temporales de nacimientos (Serie temporal circular)
+# --------------------------
+
+temporal_pattern <- birth$data %>%
+  mutate(month = as.numeric(`Mesocu`), year = as.numeric(`Añoocu`)) %>%
+  count(month, year) %>%
+  arrange(year, month)
+
+ggplot(temporal_pattern, aes(x = month, y = n, color = factor(year))) +
+  geom_line(linewidth = 1.2) +
+  coord_polar() +
+  scale_x_continuous(breaks = seq(1, 12), labels = month_names) +
+  scale_fill_catppuccin(palette = "mocha", alpha = 0.8) +
+  labs(
+    title = "Patrón Estacional de Nacimientos",
+    fill = "Año",
+    color = "Año",
+    x = "Mes",
+    y = "Cantidad"
   ) +
   dark_theme
