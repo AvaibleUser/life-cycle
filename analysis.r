@@ -22,6 +22,8 @@ dark_theme <- theme_minimal() +
     axis.title = element_text(color = "#cdd6f4", face = "bold"),
     legend.text = element_text(color = "#cdd6f4"),
     legend.title = element_text(color = "#cdd6f4", face = "bold"),
+    legend.background = element_rect(fill = "#1e1e2e"),
+    legend.box.background = element_rect(fill = "#1e1e2e"),
     panel.grid = element_line(color = "#7f849c"),
   )
 
@@ -149,3 +151,31 @@ ggplot(births_kg, aes(x = mothers_age, y = weight)) +
     x = "Edad de la Madre", y = "Peso (kg)", fill = "Nacimientos"
   ) +
   dark_theme
+
+# --------------------------
+# GRÁFICA 3:
+# Análisis de supervivencia por grupo étnico de los padres (Kaplan-Meier)
+# --------------------------
+
+survived <- death$data %>%
+  inner_join(death$vars$`Puedif`, by = c("Puedif" = "code")) %>%
+  mutate(age = as.numeric(`Edadif`)) %>%
+  select(pueblo = label, age) %>%
+  filter(pueblo != "Ignorado", age != 999)
+
+fit <- survfit(Surv(age) ~ pueblo, data = survived)
+
+ggsurvplot(fit,
+  data = survived,
+  title = "Supervivencia por Grupo Étnico",
+  xlab = "Edad",
+  ylab = "Probabilidad de supervivencia",
+  legend.title = "Pueblo",
+  legend.labs = c("Garifuna", "Xinca", "Mestizo / Ladino", "Otro", "Xinka"),
+  risk.table = TRUE,
+  legend = "right",
+  ggtheme = dark_theme,
+  tables.col = "strata",
+  surv.median.line = "hv",
+  risk.table.title = "Supervivencia",
+)
