@@ -4,7 +4,6 @@
 library(tidyverse)
 library(ggplot2)
 library(plotly)
-library(leaflet)
 library(waffle)
 library(ggridges)
 library(treemap)
@@ -225,4 +224,31 @@ ggplot(ocupation, aes(label = ocupation, size = n, color = parents)) +
     `mother_ocupation` = "Ocupación de la Madre"
   ))) +
   labs(title = "Ocupaciones más Comunes de Padres vs Madres") +
+  dark_theme
+
+# --------------------------
+# GRÁFICA 6:
+# Análisis de correspondencia educación vs causa de muerte (Biplot)
+# --------------------------
+
+education_vs_cause <- death$data %>%
+  select(`Escodif`, `Caudef`) %>%
+  inner_join(death$vars$`Escodif`, by = c("Escodif" = "code")) %>%
+  mutate(cause = substr(`Caudef`, 0, 3)) %>%
+  select(education = label, cause) %>%
+  inner_join(death$vars$`Caudef`, by = c("cause" = "code")) %>%
+  select(education, cause = label) %>%
+  group_by(education, cause) %>%
+  summarise(count = n(), .groups = "drop") %>%
+  filter(count > 500)
+
+ggplot(education_vs_cause, aes(x = education, y = cause)) +
+  geom_tile(aes(fill = count), color = "white") +
+  scale_fill_viridis(option = "C", alpha = 0.8) +
+  labs(
+    title = "Causas de Muerte más relacionadas con Escolaridad",
+    x = "Escolaridad",
+    y = "Causa de Muerte",
+    fill = "Count"
+  ) +
   dark_theme
