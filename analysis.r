@@ -176,6 +176,26 @@ ggsurvplot(fit,
   legend = "right",
   ggtheme = dark_theme,
   tables.col = "strata",
-  surv.median.line = "hv",
   risk.table.title = "Supervivencia",
+)
+
+# --------------------------
+# GRÁFICA 4:
+# Proporción de causas de muerte por grupo de edad (Treemap)
+# --------------------------
+
+causes <- death$data %>%
+  mutate(age_group = cut(as.numeric(`Edadif`),
+    breaks = c(0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
+  )) %>%
+  count(`Caudef`, age_group) %>%
+  inner_join(death$vars$`Caudef`, by = c("Caudef" = "code")) %>%
+  select(cause = label, age_group, n) %>%
+  group_by(age_group) %>%
+  top_n(5, n)
+
+treemap(causes,
+  index = c("age_group", "cause"),
+  vSize = "n",
+  title = "Principales Causas de Muerte por Grupo de Edad"
 )
