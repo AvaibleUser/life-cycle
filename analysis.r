@@ -305,3 +305,26 @@ ggplot(top_causes, aes(x = n, y = cause, fill = cause)) +
   ) +
   dark_theme +
   theme(axis.text.y = element_blank())
+
+# --------------------------
+# GRÁFICA 9:
+# Proporción de tipos de parto (Donut chart)
+# --------------------------
+
+birth_type <- birth$data %>%
+  inner_join(birth$vars$`Tipar`, by = c("Tipar" = "code")) %>%
+  count(type = label, year = `Añoocu`) %>%
+  filter(type != "Simple")
+
+ggplot(birth_type, aes(x = type, y = n, fill = type)) +
+  geom_bar(stat = "identity", color = "#1e1e2e") +
+  coord_polar() +
+  facet_wrap(~year, ncol = 1) +
+  scale_y_log10(labels = scales::comma) +
+  scale_fill_catppuccin(palette = "mocha", alpha = 0.8) +
+  labs(
+    title = "Distribución de Tipos de Parto No Simples",
+    x = "Año",
+    y = "Número de Partos"
+  ) +
+  dark_theme
