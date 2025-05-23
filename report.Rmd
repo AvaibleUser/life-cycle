@@ -2,7 +2,9 @@
 title: "Análisis Demográfico de Natalidad y Mortalidad en Guatemala"
 author: "Dylan Antonio Elías Vásquez"
 date: "22 de mayo de 2024"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 # Introducción
@@ -24,7 +26,7 @@ El análisis se centra en tres ejes principales: la evolución temporal de los i
 
 # Desarrollo
 
-```{r libraries, echo=FALSE}
+```{r libraries, echo=FALSE, warning=FALSE}
 # --------------------------
 # Librerías necesarias
 # --------------------------
@@ -40,6 +42,8 @@ library(survminer)
 library(ggwordcloud)
 library(ggalluvial)
 library(catppuccin)
+
+knitr::opts_chunk$set(fig.width = 10, fig.height = 7.5)
 ```
 
 ```{r variables, echo=FALSE}
@@ -152,6 +156,7 @@ death <- read_complete_data("defunciones")
 ```
 
 ## Evolución Mensual de Nacimientos y Defunciones
+
 ```{r chart1, echo=TRUE}
 evolution <- bind_rows(
   birth$data %>%
@@ -175,9 +180,11 @@ ggplot(evolution, aes(x = month, y = n, fill = type)) +
   ) +
   dark_theme
 ```
-**Lectura**: El gráfico muestra la superposición temporal de nacimientos (tonos azules) y defunciones (tonos duraznos) mes a mes. Las áreas más amplias indican mayor volumen de eventos. Se observan picos estacionales en nacimientos durante enero, marzo, mayo y septiembre, y un volumen constante de mortalidad en general. La altura relativa de las áreas permite comparar proporciones interanuales. 
+
+**Lectura**: El gráfico muestra la superposición temporal de nacimientos (tonos azules) y defunciones (tonos duraznos) mes a mes. Las áreas más amplias indican mayor volumen de eventos. Se observan picos estacionales en nacimientos durante enero, marzo, mayo y septiembre, y un volumen constante de mortalidad en general. La altura relativa de las áreas permite comparar proporciones interanuales.
 
 ## Relación Edad Materna - Peso Neonatal
+
 ```{r chart2, echo=TRUE}
 births_kg <- birth$data %>%
   mutate(weight = to_kg(`Libras`, `Onzas`)) %>%
@@ -194,9 +201,11 @@ ggplot(births_kg, aes(x = mothers_age, y = weight)) +
   ) +
   dark_theme
 ```
+
 **Lectura**: La densidad de puntos revela concentraciones poblacionales. Los hexágonos más cercanos al amarillo indican mayor frecuencia de casos, mientras que los cercanos al azul obscuro indican la menor frecuencia de casos. Mientras que la falta de los mismos significa que no hay casos.
 
 ## Supervivencia por Grupo Étnico
+
 ```{r chart3, echo=TRUE}
 survived <- death$data %>%
   inner_join(death$vars$`Puedif`, by = c("Puedif" = "code")) %>%
@@ -220,9 +229,11 @@ ggsurvplot(fit,
   risk.table.title = "Supervivencia",
 )
 ```
+
 **Lectura**: Las curvas muestran probabilidad acumulada de supervivencia por edad. La brecha entre líneas indica disparidades. La tabla inferior cuantifica población en riesgo por grupo. La caída abrupta en ciertas edades sugiere causas específicas de mortalidad.
 
 ## Causas de Muerte por Edad
+
 ```{r chart4, echo=TRUE}
 causes <- death$data %>%
   mutate(age_group = cut(as.numeric(`Edadif`),
@@ -240,9 +251,11 @@ treemap(causes,
   title = "Principales Causas de Muerte por Grupo de Edad"
 )
 ```
+
 **Lectura**: El tamaño de cada rectángulo representa frecuencia relativa. Los colores distinguen grupos etarios. La distribución vertical jerarquiza causas principales por franja.
 
 ## Ocupaciones Parentales
+
 ```{r chart5, echo=TRUE}
 ocupation <- birth$data %>%
   select(father_ocupation = `Ocupap`, mother_ocupation = `Ocupam`) %>%
@@ -264,10 +277,12 @@ ggplot(ocupation, aes(label = ocupation, size = n, color = parents)) +
   labs(title = "Ocupaciones más Comunes de Padres vs Madres") +
   dark_theme
 ```
+
 **Lectura**: El tamaño de palabra corresponde a frecuencia. La disposición vertical separa géneros. Las ocupaciones alineadas arriba muestran predominio masculino, abajo femenino. La densidad superior indica mayor diversidad ocupacional en un género.
 
 ## Educación vs Causas de Muerte
-```{r chart6, echo=TRUE}
+
+```{r chart6, echo=TRUE, fig.height=15}
 education_vs_cause <- death$data %>%
   select(`Escodif`, `Caudef`) %>%
   inner_join(death$vars$`Escodif`, by = c("Escodif" = "code")) %>%
@@ -290,9 +305,11 @@ ggplot(education_vs_cause, aes(x = education, y = cause)) +
   ) +
   dark_theme
 ```
+
 **Lectura**: Los cuadros más amarillos representan mayor asociación. Las columnas muestran nivel educativo, filas causas de muerte. Los vacíos indican combinaciones improbables o sin datos significativos.
 
 ## Estacionalidad de Nacimientos
+
 ```{r chart7, echo=TRUE}
 temporal_pattern <- birth$data %>%
   mutate(month = as.numeric(`Mesocu`), year = as.numeric(`Añoocu`)) %>%
@@ -313,9 +330,11 @@ ggplot(temporal_pattern, aes(x = month, y = n, color = factor(year))) +
   ) +
   dark_theme
 ```
+
 **Lectura**: La disposición circular muestra periodicidad anual. Los radios representan meses, los anillos años. La proximidad al centro indica menor cantidad. Los picos coincidentes en múltiples años revelan patrones estacionales consistentes.
 
 ## Principales Causas de Muerte
+
 ```{r chart8, echo=TRUE}
 top_causes <- death$data %>%
   mutate(cause = substr(`Caudef`, 0, 3)) %>%
@@ -336,10 +355,12 @@ ggplot(top_causes, aes(x = n, y = cause, fill = cause)) +
   dark_theme +
   theme(axis.text.y = element_blank())
 ```
+
 **Lectura**: Las barras horizontales priorizan frecuencia. El contraste cromático destaca las diez principales causas. Los valores numéricos permiten comparación cuantitativa directa. La longitud relativa muestra dominancia de causas específicas.
 
 ## Tipos de Parto
-```{r chart9, echo=TRUE}
+
+```{r chart9, echo=TRUE, fig.height=20}
 birth_type <- birth$data %>%
   inner_join(birth$vars$`Tipar`, by = c("Tipar" = "code")) %>%
   count(type = label, year = `Añoocu`) %>%
@@ -358,9 +379,11 @@ ggplot(birth_type, aes(x = type, y = n, fill = type)) +
   ) +
   dark_theme
 ```
+
 **Lectura**: Los segmentos circulares representan proporciones. Los colores distinguen categorías. El espacio central vacío enfatiza relaciones parte-todo. La distribución por año muestra estabilidad temporal.
 
 ## Mortalidad por Estado Civil y Sexo
+
 ```{r chart10, echo=TRUE}
 civil_status <- death$data %>%
   inner_join(death$vars$Ecidif, by = c("Ecidif" = "code")) %>%
@@ -382,6 +405,7 @@ ggplot(civil_status, aes(axis1 = civil_status, axis2 = sex, y = n)) +
   ) +
   dark_theme
 ```
+
 **Lectura**: El flujo entre columnas muestra transiciones. El ancho de las bandas indica volumen. Los colores distinguen género. La altura de los estratos representa proporciones. Los patrones de conexión revelan asociaciones demográficas complejas.
 
 # Conclusiones
@@ -390,6 +414,6 @@ ggplot(civil_status, aes(axis1 = civil_status, axis2 = sex, y = n)) +
 2. Las causas de muertes se concentraron en su mayoria en infartos siendo una de las principales causas desde los 40 años de edad, junto con el COVID-19 en menor medida, mientras que debajo de los 30 años de edad es más común la exposición a factores que causan lesiones
 3. Se detectaron diferencias significativas en la estructura de mortalidad entre grupos étnicos, particularmente en edades productivas o en población sexagenaria
 4. El nivel educativo demostró ser factor protector contra las causas de muertes más comunes en la población general, mostrando una diferencia significativa entre población con estudios universitarios y no estudiados, la cual puede estar causada por la baja tasa de participación en estudios universitarios
-5. Los partos muestran un patron que parece repetirse en mayor o menor medida a lo largo de los años, repitiendo una alta tasa de nacimientos en el mes de septiembre, exagerandose en el año 2021, posiblemente debido a la pandemia de COVID-19 empezando el año con una baja significativa al 2022 y 2023 posiblemente por el miedo general a la enfermedad, pero que se habra disipado en el principio del mismo año, coincidiendo con las vacaciones de diciembre, para que en septiembre existiera esa subida de nacimientos 
+5. Los partos muestran un patron que parece repetirse en mayor o menor medida a lo largo de los años, repitiendo una alta tasa de nacimientos en el mes de septiembre, exagerandose en el año 2021, posiblemente debido a la pandemia de COVID-19 empezando el año con una baja significativa al 2022 y 2023 posiblemente por el miedo general a la enfermedad, pero que se habra disipado en el principio del mismo año, coincidiendo con las vacaciones de diciembre, para que en septiembre existiera esa subida de nacimientos
 6. Las tres principales causas de muerte representaron una gran parte de la mortalidad general, siendo el infarto una preocupación común en la población general con una diferencia significativa de 10,000 casos de diferencia con la segunda causa de muerte, empezando el riesgo desde los 40 años de edad y afectando a la mayoría de la población no estudiada
 7. Se identificó que no hay cambios significativos en la razon nacimiento-defunción entre 2021 y 2023, lo que sugiere una estabilidad en la estructura de la población
