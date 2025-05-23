@@ -11,6 +11,7 @@ library(viridis)
 library(survival)
 library(survminer)
 library(ggwordcloud)
+library(ggalluvial)
 library(catppuccin)
 
 dark_theme <- theme_minimal() +
@@ -326,5 +327,30 @@ ggplot(birth_type, aes(x = type, y = n, fill = type)) +
     title = "Distribución de Tipos de Parto No Simples",
     x = "Año",
     y = "Número de Partos"
+  ) +
+  dark_theme
+
+# --------------------------
+# GRÁFICA 10:
+# Mortalidad por estado civil y sexo (Diagrama Sankey)
+# --------------------------
+
+civil_status <- death$data %>%
+  inner_join(death$vars$Ecidif, by = c("Ecidif" = "code")) %>%
+  select(civil_status = label, `Sexo`) %>%
+  inner_join(death$vars$Sexo, by = c("Sexo" = "code")) %>%
+  count(civil_status, sex = label) %>%
+  filter(!str_detect(civil_status, "Ignorado"))
+
+ggplot(civil_status, aes(axis1 = civil_status, axis2 = sex, y = n)) +
+  geom_alluvium(aes(fill = sex)) +
+  geom_stratum() +
+  geom_text(stat = "stratum", aes(label = after_stat(stratum))) +
+  scale_y_log10() +
+  scale_fill_catppuccin(palette = "mocha", alpha = 0.8) +
+  labs(
+    title = "Mortalidad por Estado Civil y Sexo",
+    x = "",
+    y = ""
   ) +
   dark_theme
