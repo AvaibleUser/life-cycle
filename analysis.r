@@ -233,7 +233,7 @@ ggplot(ocupation, aes(label = ocupation, size = n, color = parents)) +
 
 # --------------------------
 # GRÁFICA 6:
-# Análisis de correspondencia educación vs causa de muerte (Biplot)
+# Análisis de correspondencia educación vs causa de muerte (Mapa de calor)
 # --------------------------
 
 education_vs_cause <- death$data %>%
@@ -281,3 +281,27 @@ ggplot(temporal_pattern, aes(x = month, y = n, color = factor(year))) +
     y = "Cantidad"
   ) +
   dark_theme
+
+# --------------------------
+# GRÁFICA 8:
+# Top 10 causas de muerte más frecuentes (Barras horizontales)
+# --------------------------
+
+top_causes <- death$data %>%
+  mutate(cause = substr(`Caudef`, 0, 3)) %>%
+  inner_join(death$vars$`Caudef`, by = c("cause" = "code")) %>%
+  count(cause = label) %>%
+  top_n(10, n) %>%
+  arrange(desc(n))
+
+ggplot(top_causes, aes(x = n, y = cause, fill = cause)) +
+  geom_col(orientation = "y") +
+  geom_text(aes(label = n), hjust = 1.5, color = "#1e1e2e", size = 5) +
+  scale_fill_catppuccin(palette = "mocha", alpha = 0.8) +
+  labs(
+    title = "10 Principales Causas de Muerte",
+    x = "Cantidad de casos",
+    y = ""
+  ) +
+  dark_theme +
+  theme(axis.text.y = element_blank())
